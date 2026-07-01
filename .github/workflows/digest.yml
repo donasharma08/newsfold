@@ -1,0 +1,19 @@
+# Sends the daily digest by pinging the backend on a schedule (free).
+# Set repo secrets: API_URL (e.g. https://newsfold-api.onrender.com) and DIGEST_TOKEN.
+name: daily-digest
+on:
+  schedule:
+    - cron: "30 1 * * *"   # 07:00 IST daily (UTC 01:30)
+  workflow_dispatch: {}
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger digest
+        run: |
+          curl -sS -X POST "$API_URL/api/digest/run" \
+            -H "X-Digest-Token: $DIGEST_TOKEN" \
+            --max-time 120
+        env:
+          API_URL: ${{ secrets.API_URL }}
+          DIGEST_TOKEN: ${{ secrets.DIGEST_TOKEN }}

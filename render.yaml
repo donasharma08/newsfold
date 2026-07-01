@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: newsfold-api
+    runtime: python
+    rootDir: backend
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.4"
+      - key: NEWS_PROVIDER
+        value: gnews
+      - key: NEWS_API_KEY
+        sync: false              # secret — paste in Render dashboard
+      - key: NEWS_COUNTRY
+        value: in
+      - key: NEWS_LANGUAGE
+        value: en
+      - key: CACHE_TTL
+        value: "600"
+      - key: RETENTION_HOURS
+        value: "6"
+      - key: DATABASE_URL
+        sync: false              # Supabase Postgres URI
+      - key: CORS_ORIGINS
+        sync: false              # set to your Vercel URL after frontend deploys

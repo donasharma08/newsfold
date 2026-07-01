@@ -1,0 +1,12 @@
+# secrets
+**/.env
+# python
+**/__pycache__/
+**/.venv/
+*.pyc
+# node
+**/node_modules/
+**/dist/
+
+# sqlite cache
+**/*.db
